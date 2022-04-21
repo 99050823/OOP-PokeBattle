@@ -1,0 +1,27 @@
+#container {margin-top: 1cm;}
+#view {height: 150px;}
+
+#list {
+    margin-right: 111px;
+    height: 200px;
+}
+
+#box {
+    height: 200px;
+    color: rgb(0, 243, 0);
+    border-color: white;
+    border-style: solid;
+    border-radius: 20px;
+}
+
+#box p {
+    text-align: start;
+    margin-left: 10px;
+}
+
+#active {
+    width: 350px;
+    margin-left: 55px;
+}
+
+.top {margin-bottom: .7cm;}
