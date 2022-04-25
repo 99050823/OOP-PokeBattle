@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php require 'PHP/Database.php'?>
+<?php require 'PHP/Connection.php'?>
 <?php require 'PHP/Pokemon.php'?>
 <?php require 'PHP/Generate.php'?>
 <head>
@@ -16,9 +18,16 @@
             <div id="list">
                 <ul>
                     <?php
-                        echo $listElements;
+                        $data = getData($conn);
+                        while ($row = $data->fetch_assoc()) {
+                            $name = $row['name'];
+                            $id = $row['id'];
+                            echo "<li><a href='PHP/View.php?id=".$id."'>".$name."</a></li>";
+                        }
                     ?>
                 </ul>
+
+                <a href="PHP/Delete.php">Delete All</a><br><br>
 
                 <form method="post">
                     <input name="add" type="submit" value="Add Pokemon">
@@ -27,6 +36,27 @@
 
             <div id="view">
                 <p>Pokemon View</p>
+                
+                <ul>
+                <?php
+                    $dataArr = array();
+                
+                    $name = $_GET['name'];
+                    $type = $_GET['type'];
+                    $hp = $_GET['hp'];
+                    $attack = $_GET['attack'];
+                    $weakness = $_GET['weakness'];
+                    $resistance = $_GET['resistance'];
+
+                    array_push($dataArr, $name, $type, $hp, $attack, $weakness, $resistance);
+                    $count = count($dataArr); 
+
+                    for ($i=0; $i < $count; $i++) { 
+                        echo "<li>".$dataArr[$i]."</li>";
+                    }
+
+                ?>
+                </ul>
             </div>
         </div>
 
