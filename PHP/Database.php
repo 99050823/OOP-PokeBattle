@@ -14,10 +14,20 @@
         }
     }
 
-    function getData ($conn) {
+    function sendActiveData($conn, $id, $name) {
+        try {
+            $stmt = "INSERT INTO active (id, name) 
+            VALUES ('".$id."','".$name."')";
+            mysqli_query($conn, $stmt);    
+        } catch (mysqli_sql_exception $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+    }
+
+    function getData ($conn, $table) {
         try {
             $stmt = "SELECT *
-            FROM pokemon";
+            FROM $table";
             $result = mysqli_query($conn, $stmt);
         } catch (mysqli_sql_exception $e) {
             echo "Connection failed: " . $e->getMessage();
@@ -38,10 +48,27 @@
         return $result;
     }
 
-    function deleteAll ($conn) {
+    function deleteSingle ($conn, $id) {
         try {
-            $stmt = "DELETE FROM pokemon";
-            mysqli_query($conn, $stmt);
+            $stmt = "DELETE FROM pokemon WHERE id=$id";
+            $result = mysqli_query($conn, $stmt);
+        } catch (mysqli_sql_exception $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+    }
+
+    function deleteAll ($conn, $type) {
+        try {
+
+            if ($type == 'all') {
+                $stmt = "DELETE FROM pokemon";
+                mysqli_query($conn, $stmt);
+                $stmt2 = "DELETE FROM active";
+                mysqli_query($conn, $stmt2);
+            } else {
+                $stmt = "DELETE FROM active";
+                mysqli_query($conn, $stmt);
+            }
         } catch (mysqli_sql_exception $e) {
             echo "Connection failed: " . $e->getMessage();
         }
@@ -61,4 +88,16 @@
         $result = mysqli_fetch_object($result);
 
         return $result->type;
+    }
+
+    function checkCount ($conn) {
+        try {
+            $stmt = "SELECT COUNT(*) as total FROM active";
+            $result = mysqli_query($conn, $stmt);
+            $data = mysqli_fetch_assoc($result);
+        } catch (mysqli_sql_exception $e) {
+            echo "Connection failed: " . $e->getMessage();
+        }
+
+        return $data;
     }

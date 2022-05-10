@@ -13,4 +13,14 @@ class Pokemon {
     public function __toString () {
         return json_encode($this);
     }
+
+    public function attack ($target) {
+        if ($this->attack == "Ember") {
+            $damage = 40;
+        }
+
+        $total = $target->hp - $damage;
+
+        return $total;
+    }
 }

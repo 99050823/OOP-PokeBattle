@@ -27,26 +27,48 @@ body {background-color: black; color:white}
     background-color: #2196F3;
 }
 
-#box {
-    border-style: solid;
-    border-color: white;
-    border-radius: 20px;
-    color: rgb(1, 191, 1);
-    text-align: left;
-    height: 200px;
+span {
+    display: inline-block;
 }
 
-#box p {margin-left: 20px;}
+#view ul {
+    text-align: start;
+    list-style-type: '-';
+}
 
-#active {
+#view #icon-span {
+    float: right;
+    margin-top: 12px;
+    margin-left: -40px;
+}
+
+#view i {
+    font-size: 30px;
+    color: white;
+}
+
+#view #icon-span:hover i {
+    color: black;
+}
+
+#board {
     background-color: #9E9E9E;
-    height: 100px;
-    margin: 0 .5cm 0 17cm;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    margin: 1cm 5cm 0 5cm;
 }
 
+.info-board {
+    background-color: #2196F3;
+    color: black;
+}
 
+.bottom .inline {
+    display: flex;
+    justify-content: space-between;
+}
 
-
-
+.bottom .pokemon-active {
+    background-color: #2196F3;
+    padding: 0 20px 0 20px;
+    margin: 0 20px 20px 20px;
+    border-radius: 20px;
+}

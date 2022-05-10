@@ -22,14 +22,13 @@ if ($addButton && $addButton != "") {
 
         $randomType = "type";
     }
-    $pokemon = new Pokemon($dataArr[0], $dataArr[1], "100", "Ember", $dataArr[2], $dataArr[3]);
     
-    $name = $pokemon->name;
-    $type = $pokemon->type;
-    $hp = $pokemon->hp;
-    $attack = $pokemon->attack;
-    $weak = $pokemon->weak;
-    $res = $pokemon->res;
+    $name = $dataArr[0];
+    $type = $dataArr[1];
+    $hp = "100";
+    $attack = "Ember";
+    $weak = $dataArr[2];
+    $res = $dataArr[3];
 
     sendData($conn,$name,$type,$hp,$attack,$weak,$res);
     header("Location: index.php", true, 303);
