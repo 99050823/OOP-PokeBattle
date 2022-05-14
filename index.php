@@ -56,14 +56,13 @@
                 <ul>
                 <?php
                     $dataArr = array();
-
+                    $textArr = array("Name", "Type", "HP", "Move", "Weakness", "Resistance");
                     array_push($dataArr, $name, $type, $hp, $attack, $weakness, $resistance);
                     $count = count($dataArr); 
 
                     for ($i=0; $i < $count; $i++) { 
-                        echo "<li>".$dataArr[$i]."</li>";
+                        echo "<li>".$textArr[$i] .": ". $dataArr[$i]."</li>";
                     }
-
                 ?>
                 </ul>
             </div>

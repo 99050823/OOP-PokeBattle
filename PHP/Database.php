@@ -4,10 +4,10 @@
         return mysqli_real_escape_string($param);
     }
 
-    function sendData ($conn, $name, $type, $hp, $attack, $weak, $res) {
+    function sendData ($conn, $name, $type, $hp, $attack, $weak, $res, $hitpoints) {
         try {
-            $stmt = "INSERT INTO pokemon (name, type, hp, attack, weakness, resistance) 
-            VALUES ('".$name."', '".$type."', '".$hp."', '".$attack."', '".$weak."', '".$res."')";
+            $stmt = "INSERT INTO pokemon (name, type, hp, attack, weakness, resistance, hitpoints) 
+            VALUES ('".$name."', '".$type."', '".$hp."', '".$attack."', '".$weak."', '".$res."', '".$hitpoints."')";
             mysqli_query($conn, $stmt);    
         } catch (mysqli_sql_exception $e) {
             echo "Connection failed: " . $e->getMessage();
@@ -88,6 +88,14 @@
         $result = mysqli_fetch_object($result);
 
         return $result->type;
+    }
+
+    function getRandomMove($conn, $func) {
+        $stmt = "SELECT `move` FROM moves ORDER BY rand() LIMIT 1";
+        $result = mysqli_query($conn, $stmt) or die(mysqli_error($conn));
+        $result = mysqli_fetch_object($result);
+
+        return $result->move;
     }
 
     function checkCount ($conn) {
