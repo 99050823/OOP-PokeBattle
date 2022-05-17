@@ -1,10 +1,9 @@
 <?php
 
 class Pokemon {
-    public function __construct ($name, $type, $hp, $attack, $weak, $res, $hitpoints) {
+    public function __construct ($name, $type, $attack, $weak, $res, $hitpoints) {
         $this->name = $name;
         $this->type = $type;
-        $this->hp = $hp;
         $this->attack = $attack;
         $this->weak = $weak;
         $this->res = $res;
@@ -31,7 +30,11 @@ class Pokemon {
         if ($type == $weakness) {
             $newDamage = $int + 10;
         } else if ($type == $resistance) {
-            $newDamage = $int - 10;
+            if ($this->attack == "Tackle") {
+                $newDamage = 10;
+            } else {
+                $newDamage = $int - 10;
+            }
         } else {
             $newDamage = $int;
         }
@@ -51,4 +54,12 @@ class Pokemon {
             }
         }
     }
+
+    public function calculateHp ($target, $hp) {
+        $damage = $this->attack($target);
+
+        $totalHp = $hp - $damage;
+        return $totalHp;
+    }
+
 }

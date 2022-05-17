@@ -1,5 +1,5 @@
 <?php
-// Pokemon Class = name - type - hp - attack - weak - res
+// Pokemon Class = name - type - attack - weak - res
 $addButton = $_POST['add'];
 $dataArr = array();
 
@@ -38,13 +38,12 @@ if ($addButton && $addButton != "") {
     
     $name = $dataArr[0];
     $type = $dataArr[1];
-    $hp = "100";
     $attack = $dataArr[4];
     $weak = $dataArr[2];
     $res = $dataArr[3];
     $hitpoints = 0;
 
-    sendData($conn,$name,$type,$hp,$attack,$weak,$res,$hitpoints);
+    sendData($conn,$name,$type,$attack,$weak,$res,$hitpoints);
     header("Location: index.php", true, 303);
 }
 

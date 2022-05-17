@@ -40,7 +40,6 @@
                     $id = $_GET['id'];
                     $name = $_GET['name'];
                     $type = $_GET['type'];
-                    $hp = $_GET['hp'];
                     $attack = $_GET['attack'];
                     $weakness = $_GET['weakness'];
                     $resistance = $_GET['resistance'];
@@ -56,8 +55,8 @@
                 <ul>
                 <?php
                     $dataArr = array();
-                    $textArr = array("Name", "Type", "HP", "Move", "Weakness", "Resistance");
-                    array_push($dataArr, $name, $type, $hp, $attack, $weakness, $resistance);
+                    $textArr = array("Name", "Type", "Move", "Weakness", "Resistance");
+                    array_push($dataArr, $name, $type, $attack, $weakness, $resistance);
                     $count = count($dataArr); 
 
                     for ($i=0; $i < $count; $i++) { 

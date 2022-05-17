@@ -13,5 +13,6 @@ if ($count >= 0 && $count < 2) {
     sendActiveData($conn, $id, $name);
     header("Location: http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle");
 } else {
-    header("Location: http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle");
+    echo "<h3>Already two pokemon active. Please reset if you want to add diffrent ones.</h3>";
+    echo "<a href='../index.php'>Return</a>";
 }

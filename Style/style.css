@@ -16,6 +16,7 @@ body {background-color: black; color:white}
 
 #list {
     background-color: #4CAF50;
+    border-radius: 10px;
 }
 
 #list ul {
@@ -25,6 +26,7 @@ body {background-color: black; color:white}
 
 #view {
     background-color: #2196F3;
+    border-radius: 10px;
 }
 
 span {
