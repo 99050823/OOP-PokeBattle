@@ -1,9 +1,5 @@
 <?php
 
-    function escape ($param) {
-        return mysqli_real_escape_string($param);
-    }
-
     function sendData ($conn, $name, $type, $attack, $weak, $res, $hitpoints) {
         try {
             $stmt = "INSERT INTO pokemon (name, type, attack, weakness, resistance, hitpoints) 
@@ -74,7 +70,7 @@
         }
     }
 
-    function getRandomName ($conn, $func) {
+    function getRandomName ($conn) {
         $stmt = "SELECT `name` FROM names ORDER BY rand() LIMIT 1";
         $result = mysqli_query($conn, $stmt) or die(mysqli_error($conn));
         $result = mysqli_fetch_object($result);
@@ -82,12 +78,12 @@
         return $result->name;
     }
 
-    function getRandomType ($conn, $func) {
-        $stmt = "SELECT `type` FROM types ORDER BY rand() LIMIT 1";
-        $result = mysqli_query($conn, $stmt) or die(mysqli_error($conn));
-        $result = mysqli_fetch_object($result);
+    function getAllTypes ($conn) {
+        $stmt = "SELECT * FROM types";
+        $result = mysqli_query($conn, $stmt);
+        $result = mysqli_fetch_all($result);
 
-        return $result->type;
+        return $result;
     }
 
     function getRandomMove($conn, $func) {

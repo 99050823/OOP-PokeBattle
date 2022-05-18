@@ -1,50 +1,47 @@
 <?php
 // Pokemon Class = name - type - attack - weak - res
+// echo $typesArr[9][0];
+
 $addButton = $_POST['add'];
-$dataArr = array();
+$typesArr = getAllTypes($conn);
+$count = count($typesArr);
+$selectedTypes = array();
 
-function random ($type, $conn) {
-    if ($type == "name") {
-        $result = getRandomName($conn, $type);
-        echo $result;
-    } else if ($type == "type"){
-        $result = getRandomType($conn, $type);
-    } else if ($type == "move") {
-        $result = getRandomMove($conn, $type);
-    }
-
-    return $result;
+function getRandomType ($arrCount, $arr) {
+    $int = rand(0, $arrCount);
+    $element = $arr[$int][0];
+    return $element;
 }
 
-if ($addButton && $addButton != "") {
-    for ($i=0; $i < 5; $i++) { 
-        switch (true) {
-            case $i == 0:
-                $randomType = "name";
-                break;
-            case $i < 3:
-                $randomType = "type";
-                break;
-            case $i > 3:
-                $randomType = "move"; 
-                break;
-            default:
-                break;
-        }
+function checkTypes ($arr) {
+    $arr = array_unique($arr);
+    $newCount = count($arr);
 
-        $data = random($randomType, $conn);
-        array_push($dataArr, $data);
+    while ($newCount !== 3) {
+        $newType = getRandomType($count, $arr);
+        array_push($arr, $newType);
+        $newCount = count($arr);
     }
+
+    return $arr;
+}
+
+if ($addButton) {
+    for ($i=0; $i < 3; $i++) { 
+        $newType = getRandomType($count, $typesArr);
+        array_push($selectedTypes, $newType);
+    }
+
+    $selectedTypes = checkTypes($selectedTypes);
     
-    $name = $dataArr[0];
-    $type = $dataArr[1];
-    $attack = $dataArr[4];
-    $weak = $dataArr[2];
-    $res = $dataArr[3];
+    $name = getRandomName($conn);
+    $type = $selectedTypes[0];
+    $attack = "test";
+    $weak = $selectedTypes[1];
+    $res = $selectedTypes[2];
     $hitpoints = 0;
 
     sendData($conn,$name,$type,$attack,$weak,$res,$hitpoints);
     header("Location: index.php", true, 303);
 }
-
 
