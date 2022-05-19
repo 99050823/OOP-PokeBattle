@@ -86,7 +86,7 @@
         return $result;
     }
 
-    function getRandomMove($conn, $func) {
+    function getRandomMove($conn) {
         $stmt = "SELECT `move` FROM moves ORDER BY rand() LIMIT 1";
         $result = mysqli_query($conn, $stmt) or die(mysqli_error($conn));
         $result = mysqli_fetch_object($result);

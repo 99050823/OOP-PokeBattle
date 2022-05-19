@@ -93,11 +93,36 @@
                     }
 
                     echo "</div>";
-                    echo "<a href='index.php?window=Battle'>Start Battle</a>";
+                    echo "<a id='start-link' href='index.php?window=Battle'>Start Battle</a>";
                 }
             
             ?>
         </div>
     </div>
+
+    <script>
+        const startLink = document.getElementById('start-link');
+        const viewTab = document.getElementById('view');
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const viewCheck = urlParams.get('view-check');
+
+        startLink.style.display = 'none';
+
+        <?php 
+            $data = checkCount($conn);
+            $activeCount = $data['total'];
+        ?>
+        var activeCount = <?php echo $activeCount?>;
+
+        if (activeCount == 2) {
+            startLink.style.display = 'inline';
+        }
+
+        if (viewCheck == null) {
+            viewTab.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
