@@ -59,6 +59,10 @@ class Pokemon {
         $damage = $this->attack($target);
 
         $totalHp = $hp - $damage;
+
+        if ($totalHp < 0) {
+            $totalHp = 0;
+        }
         return $totalHp;
     }
 

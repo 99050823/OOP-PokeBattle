@@ -67,9 +67,9 @@
             </div>
         </div>
 
-        <div class="bottom">
+        <div id="battle" class="bottom">
             <?php
-            
+                
                 if (isset($_GET['window'])) {
                     require "Window/".$_GET['window'].".php";
                 } else {
@@ -77,12 +77,12 @@
                         <h2>Active</h2>
                         <a href='PHP/Delete.php?type=active'>reset</a>
                     </div>";
-
-                    echo "<div class='active'>";
+            
+                    echo "<div id='active-panel' class='active'>";
                     
                     $data = checkCount($conn);
                     $count = $data['total'];
-
+            
                     if ($count > 0) {
                         $data = getData($conn, 'active');
                         while ($row = mysqli_fetch_assoc($data)) {
@@ -91,11 +91,11 @@
                     } else {
                         echo "<h2>No Active pokemon...</h2>";
                     }
-
+            
                     echo "</div>";
                     echo "<a id='start-link' href='index.php?window=Battle'>Start Battle</a>";
                 }
-            
+                    
             ?>
         </div>
     </div>

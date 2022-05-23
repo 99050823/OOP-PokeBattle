@@ -47,7 +47,9 @@
     function deleteSingle ($conn, $id) {
         try {
             $stmt = "DELETE FROM pokemon WHERE id=$id";
-            $result = mysqli_query($conn, $stmt);
+            mysqli_query($conn, $stmt);
+            $stmt2 = "DELETE FROM active";
+            mysqli_query($conn, $stmt2);
         } catch (mysqli_sql_exception $e) {
             echo "Connection failed: " . $e->getMessage();
         }
@@ -55,7 +57,6 @@
 
     function deleteAll ($conn, $type) {
         try {
-
             if ($type == 'all') {
                 $stmt = "DELETE FROM pokemon";
                 mysqli_query($conn, $stmt);

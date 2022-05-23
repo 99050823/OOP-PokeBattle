@@ -2,10 +2,7 @@
 // $name, $type, $hp, $attack, $weak, $res
 session_start();
 
-echo "<div>";
-echo "<span><h3>Battle Started</h3></span>";
-echo "<span id='anchor-span'><a href='./PHP/DestroySession.php'>exit</a></span>";
-echo "</div>";
+echo "<h3>Battle Started</h3>";
 
 $contenders = array();
 $active = getData($conn, 'active');
@@ -40,9 +37,22 @@ echo "<h2></h2>";
 <script>
     window.onload = function(e) {
         const textEl = document.querySelector('h2');
-        const anchor = document.getElementById('anchor-span');
+        const pokemonSpan = document.querySelectorAll('.pokemon-active');
+        const viewPanel = document.getElementById('view');
+        const listPanel = document.getElementById('list');
+        const battlePanel = document.getElementById('battle');
+
+        var pokemonBadge1 = pokemonSpan[0];
+        var pokemonBadge2 = pokemonSpan[1]; 
         var txt = "";
-        anchor.style.display = 'none';
+
+        viewPanel.style.display = 'none';
+        listPanel.style.display = 'none';
+        battlePanel.style.backgroundColor = '#00008B';
+        battlePanel.style.marginLeft = '200px';
+        battlePanel.style.marginRight = '200px';
+        battlePanel.style.borderRadius = '20px';
+
         stage1();
         
         function stage1 () {
@@ -94,7 +104,8 @@ echo "<h2></h2>";
 
             if (pokemon == "Pokemon2") {
                 if (hp2 <= 0) {
-                    txt = "<?php echo $contenders[1]->name . " Fainted"?>"
+                    txt = "<?php echo $contenders[1]->name . " Fainted"?>"  
+                    pokemonBadge2.style.backgroundColor = 'red';
 
                     setTimeout(() => {
                         end();
@@ -107,7 +118,8 @@ echo "<h2></h2>";
             } else if (pokemon == "Pokemon1"){
                 if (hp1 <= 0) {
                     txt = "<?php echo $contenders[0]->name . " Fainted"?>"
-                    
+                    pokemonBadge1.style.backgroundColor = 'red';
+
                     setTimeout(() => {
                         end();  
                     }, 3000);
@@ -122,15 +134,11 @@ echo "<h2></h2>";
         }
 
         function refresh () {
-            txt = "Please refresh this page to continue";
-            textEl.innerHTML = txt; 
-            anchor.style.display = 'inline';
+            window.location.reload();
         }
 
         function end () {
-            txt = "Please click on 'exit' to return to the home page.";
-            textEl.innerHTML = txt;
-            anchor.style.display = 'inline';
+            window.location.replace("http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle/PHP/DestroySession.php");
         }
     } 
 
