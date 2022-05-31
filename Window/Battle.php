@@ -1,6 +1,5 @@
 <?php
 // $name, $type, $hp, $attack, $weak, $res
-session_start();
 
 echo "<h3>Battle Started</h3>";
 
@@ -10,25 +9,20 @@ $active = getData($conn, 'active');
 while($row = mysqli_fetch_assoc($active)) {
     $data = getDataById($conn, $row['id']);
 
+    $hp = 100;
     $name = $data->name;
     $type = $data->type;
     $attack = $data->attack;
     $weak = $data->weakness;
     $res = $data->resistance;
-    $hitpoints = $data->hitpoints;
 
-    $pokemon = new Pokemon($name, $type, $attack, $weak, $res, $hitpoints); 
+    $pokemon = new Pokemon($hp, $name, $type, $attack, $weak, $res); 
     array_push($contenders, $pokemon);
 }
 
-if (!isset($_SESSION['hpPokemon1'])) {
-    $_SESSION['hpPokemon1'] = 100;
-    $_SESSION['hpPokemon2'] = 100;   
-} 
-
-echo "<span class='pokemon-active'><p>".$contenders[0]->name."</p></span>";
+echo "<span class='pokemon-active'><p>".$contenders[0]->getter('name')."</p></span>";
 echo "<span><p>VS</p></span>";
-echo "<span class='pokemon-active'><p>".$contenders[1]->name."</p></span>";
+echo "<span class='pokemon-active'><p>".$contenders[1]->getter('name')."</p></span>";
 
 echo "<h2></h2>";
 
@@ -56,47 +50,34 @@ echo "<h2></h2>";
         stage1();
         
         function stage1 () {
-            <?php 
-                $hp = $contenders[0]->calculateHp($contenders[1], $_SESSION['hpPokemon2']);
-                $_SESSION['hpPokemon2'] = $hp;
-            ?>
-
-            txt = "<?php echo $contenders[0]->name . " uses " . $contenders[0]->attack?>"
+            txt = "<?php echo $contenders[0]->getter('name') . ' uses ' . $contenders[0]->getter('attack')?>";
             textEl.innerHTML = txt;
 
             setTimeout(() => {
-                txt = "<?php echo $contenders[1]->name . " has " . $_SESSION['hpPokemon2'] . " HP left"?>";
-                textEl.innerHTML = txt;
+                $.ajax({
+                    type: 'post',
+                    url: './Other/data.php',
+                    data: {
+                        contender2HP: '<?php echo $contenders[1]->getter('hp')?>',
+                        damage: '<?php echo $contenders[0]->getDamage($contenders[1])?>'
+                    },
+                    success: function(data) {
+                        data = parseInt(data);
+                        txt = `<?php echo $contenders[1]->getter('name')?> has ${data} HP left`;
+                        textEl.innerHTML = txt;
+                    }
+                })
             }, 2000);
-
-            setTimeout(() => {
-                checkHp("Pokemon2");
-            }, 4000);
         }
 
         function stage2 () {
-            <?php 
-                $hp = $contenders[1]->calculateHp($contenders[0], $_SESSION['hpPokemon1']);
-                $_SESSION['hpPokemon1'] = $hp;
-            ?>
-            
-            txt = "<?php echo $contenders[1]->name . " uses " . $contenders[1]->attack?>"
-            textEl.innerHTML = txt;
 
-            setTimeout(() => {
-                txt = "<?php echo $contenders[0]->name . " has " . $_SESSION['hpPokemon1'] . " HP left"?>";
-                textEl.innerHTML = txt;
-            }, 2000);
-
-            setTimeout(() => {
-                checkHp("Pokemon1");
-            }, 4000);
         }
 
         function checkHp(pokemon) {
             <?php 
-                $hp1 = $_SESSION['hpPokemon1']; 
-                $hp2 = $_SESSION['hpPokemon2'];   
+                $hp1 = $contenders[0]->getter('hp'); 
+                $hp2 = $contenders[1]->getter('hp');   
             ?>
 
             var hp1 = "<?php echo $hp1?>"
@@ -104,7 +85,7 @@ echo "<h2></h2>";
 
             if (pokemon == "Pokemon2") {
                 if (hp2 <= 0) {
-                    txt = "<?php echo $contenders[1]->name . " Fainted"?>"  
+                    txt = "<?php echo $contenders[1]->getter('name') . " Fainted"?>"  
                     pokemonBadge2.style.backgroundColor = 'red';
 
                     setTimeout(() => {
@@ -117,7 +98,7 @@ echo "<h2></h2>";
                 }
             } else if (pokemon == "Pokemon1"){
                 if (hp1 <= 0) {
-                    txt = "<?php echo $contenders[0]->name . " Fainted"?>"
+                    txt = "<?php echo $contenders[0]->getter('name') . " Fainted"?>"
                     pokemonBadge1.style.backgroundColor = 'red';
 
                     setTimeout(() => {
@@ -125,7 +106,7 @@ echo "<h2></h2>";
                     }, 3000);
                 } else {
                     setTimeout(() => {
-                        refresh();
+                        stage1();
                     }, 2000);
                 }
             }
@@ -133,13 +114,10 @@ echo "<h2></h2>";
             textEl.innerHTML = txt;
         }
 
-        function refresh () {
-            window.location.reload();
+        function end () {
+            window.location.replace("http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle/");
         }
 
-        function end () {
-            window.location.replace("http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle/PHP/DestroySession.php");
-        }
     } 
 
 </script>

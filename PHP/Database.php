@@ -1,9 +1,9 @@
 <?php
 
-    function sendData ($conn, $name, $type, $attack, $weak, $res, $hitpoints) {
+    function sendData ($conn, $name, $type, $attack, $weak, $res) {
         try {
-            $stmt = "INSERT INTO pokemon (name, type, attack, weakness, resistance, hitpoints) 
-            VALUES ('".$name."', '".$type."', '".$attack."', '".$weak."', '".$res."', '".$hitpoints."')";
+            $stmt = "INSERT INTO pokemon (name, type, attack, weakness, resistance) 
+            VALUES ('".$name."', '".$type."', '".$attack."', '".$weak."', '".$res."')";
             mysqli_query($conn, $stmt);    
         } catch (mysqli_sql_exception $e) {
             echo "Connection failed: " . $e->getMessage();

@@ -4,6 +4,7 @@
 <?php require 'PHP/Connection.php'?>
 <?php require 'PHP/Pokemon.php'?>
 <?php require 'PHP/Generate.php'?>
+<?php require 'PHP/Default.php'?>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
     <title>Pokemon</title>
     <link rel="stylesheet" href="Style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     
@@ -47,7 +49,7 @@
 
                 <span><p>Pokemon View</p></span>
                 <span id="icon-span">
-                    <a href="PHP/Delete.php?type=single&id=<?php echo $id?>"><i class="fa-solid fa-delete-left"></i></a>
+                    <a href="PHP/Delete.php?type=single&id=<?php echo $id?>&name=<?php echo $name?>"><i class="fa-solid fa-delete-left"></i></a>
                 </span><br> 
 
                 <a id="setActive" href="PHP/Active.php?id=<?php echo $id?>">Set active</a>

@@ -1,13 +1,20 @@
 <?php
 
 class Pokemon {
-    public function __construct ($name, $type, $attack, $weak, $res, $hitpoints) {
+    private $hp;
+    private $name;
+    private $type;
+    private $attack;
+    private $weak;
+    private $res;
+
+    public function __construct ($hp, $name, $type, $attack, $weak, $res) {
+        $this->hp = $hp;
         $this->name = $name;
         $this->type = $type;
         $this->attack = $attack;
         $this->weak = $weak;
         $this->res = $res;
-        $this->hitpoints = $hitpoints;
     }
 
     public function __toString () {
@@ -18,7 +25,6 @@ class Pokemon {
         $str = $this->moves();
         $int = (int)$str;
         $damage = $this->checkTyping($int, $target->weak, $target->res);
-        $this->hitpoints = $damage;
 
         return $damage;
     }
@@ -46,7 +52,7 @@ class Pokemon {
         $moveArray = array("Tackle"=>"10", "Vine Whip"=>"20", "Water Gun"=>"30",
         "Thunderstorm"=>"40", "Ember"=>"50");
 
-        $move = $this->attack;
+        $move = $this->getter('attack');
 
         foreach($moveArray as $x => $x_value) {
             if ($x == $move) {
@@ -55,15 +61,39 @@ class Pokemon {
         }
     }
 
-    public function calculateHp ($target, $hp) {
+    public function getDamage ($target) {
         $damage = $this->attack($target);
-
-        $totalHp = $hp - $damage;
-
-        if ($totalHp < 0) {
-            $totalHp = 0;
-        }
-        return $totalHp;
+        return $damage;
     }
 
+    public function setter ($typeOfGetter, $value) {
+        switch ($typeOfGetter) {
+            case 'hp':
+                $this->hp = $value;
+                break;
+            case 'name':
+                $this->name = $value;
+            default:
+                break;
+        }
+    }
+
+    public function getter ($typeOfGetter) {
+        switch ($typeOfGetter) {
+            case 'name':
+                return $this->name;
+                break;
+            case 'attack':
+                return $this->attack;
+                break;
+            case 'hp':
+                return $this->hp;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+class Charmeleon Extends Pokemon {
 }

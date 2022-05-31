@@ -31,9 +31,8 @@ if ($addButton) {
     $attack = getRandomMove($conn);
     $weak = $selectedTypes[1];
     $res = $selectedTypes[2];
-    $hitpoints = 0;
 
-    sendData($conn,$name,$type,$attack,$weak,$res,$hitpoints);
+    sendData($conn,$name,$type,$attack,$weak,$res);
     header("Location: index.php", true, 303);
 }
 
