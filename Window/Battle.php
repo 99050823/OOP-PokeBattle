@@ -1,6 +1,6 @@
 <?php
 // $name, $type, $hp, $attack, $weak, $res
-
+session_start();
 echo "<h3>Battle Started</h3>";
 
 $contenders = array();
@@ -9,16 +9,20 @@ $active = getData($conn, 'active');
 while($row = mysqli_fetch_assoc($active)) {
     $data = getDataById($conn, $row['id']);
 
-    $hp = 100;
     $name = $data->name;
     $type = $data->type;
     $attack = $data->attack;
     $weak = $data->weakness;
     $res = $data->resistance;
 
-    $pokemon = new Pokemon($hp, $name, $type, $attack, $weak, $res); 
+    $pokemon = new Pokemon($name, $type, $attack, $weak, $res); 
     array_push($contenders, $pokemon);
 }
+
+if (!isset($_SESSION['hpPokemon1'])) {
+    $_SESSION['hpPokemon1'] = 100;
+    $_SESSION['hpPokemon2'] = 100;   
+} 
 
 echo "<span class='pokemon-active'><p>".$contenders[0]->getter('name')."</p></span>";
 echo "<span><p>VS</p></span>";
@@ -50,34 +54,53 @@ echo "<h2></h2>";
         stage1();
         
         function stage1 () {
+            <?php
+                $damage = $contenders[0]->getDamage($contenders[1]);
+                $currentHp = $_SESSION['hpPokemon2'];
+
+                $newHp = $currentHp - $damage;
+                $_SESSION['hpPokemon2'] = $newHp;
+            ?>
+
             txt = "<?php echo $contenders[0]->getter('name') . ' uses ' . $contenders[0]->getter('attack')?>";
             textEl.innerHTML = txt;
 
             setTimeout(() => {
-                $.ajax({
-                    type: 'post',
-                    url: './Other/data.php',
-                    data: {
-                        contender2HP: '<?php echo $contenders[1]->getter('hp')?>',
-                        damage: '<?php echo $contenders[0]->getDamage($contenders[1])?>'
-                    },
-                    success: function(data) {
-                        data = parseInt(data);
-                        txt = `<?php echo $contenders[1]->getter('name')?> has ${data} HP left`;
-                        textEl.innerHTML = txt;
-                    }
-                })
+                txt = "<?php echo $contenders[1]->getter('name') . ' has ' . $_SESSION['hpPokemon2'] . ' HP left'?>";
+                textEl.innerHTML = txt;                
+            }, 2000);
+
+            setTimeout(() => {
+                checkHp('Pokemon2');
             }, 2000);
         }
 
         function stage2 () {
+            <?php
+                $damage = $contenders[1]->getDamage($contenders[0]);
+                $currentHp = $_SESSION['hpPokemon1'];
 
+                $newHp = $currentHp - $damage;
+                $_SESSION['hpPokemon1'] = $newHp;
+            ?>
+
+            txt = "<?php echo $contenders[1]->getter('name') . ' uses ' . $contenders[1]->getter('attack')?>";
+            textEl.innerHTML = txt;
+
+            setTimeout(() => {
+                txt = "<?php echo $contenders[0]->getter('name') . ' has ' . $_SESSION['hpPokemon1'] . ' HP left'?>";
+                textEl.innerHTML = txt;                
+            }, 2000);
+
+            setTimeout(() => {
+                checkHp('Pokemon1');
+            }, 2000);
         }
 
         function checkHp(pokemon) {
             <?php 
-                $hp1 = $contenders[0]->getter('hp'); 
-                $hp2 = $contenders[1]->getter('hp');   
+                $hp1 = $_SESSION['hpPokemon1']; 
+                $hp2 = $_SESSION['hpPokemon2'];   
             ?>
 
             var hp1 = "<?php echo $hp1?>"
@@ -106,7 +129,7 @@ echo "<h2></h2>";
                     }, 3000);
                 } else {
                     setTimeout(() => {
-                        stage1();
+                        refresh();
                     }, 2000);
                 }
             }
@@ -114,8 +137,14 @@ echo "<h2></h2>";
             textEl.innerHTML = txt;
         }
 
+        function refresh () {
+            txt = "Please refresh this page to continue";
+            textEl.innerHTML = txt; 
+            anchor.style.display = 'inline';
+        }
+
         function end () {
-            window.location.replace("http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle/");
+            window.location.replace("http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle/PHP/DestroySession.php");
         }
 
     } 

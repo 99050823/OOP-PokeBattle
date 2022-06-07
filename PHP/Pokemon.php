@@ -1,15 +1,13 @@
 <?php
 
 class Pokemon {
-    private $hp;
     private $name;
     private $type;
     private $attack;
     private $weak;
     private $res;
 
-    public function __construct ($hp, $name, $type, $attack, $weak, $res) {
-        $this->hp = $hp;
+    public function __construct ($name, $type, $attack, $weak, $res) {
         $this->name = $name;
         $this->type = $type;
         $this->attack = $attack;
@@ -68,9 +66,6 @@ class Pokemon {
 
     public function setter ($typeOfGetter, $value) {
         switch ($typeOfGetter) {
-            case 'hp':
-                $this->hp = $value;
-                break;
             case 'name':
                 $this->name = $value;
             default:
@@ -86,9 +81,6 @@ class Pokemon {
             case 'attack':
                 return $this->attack;
                 break;
-            case 'hp':
-                return $this->hp;
-                break;
             default:
                 break;
         }
@@ -96,4 +88,7 @@ class Pokemon {
 }
 
 class Charmeleon Extends Pokemon {
+    public function __construct() {
+        parent::__construct($name, $type, $attack, $weak, $res);
+    }
 }
