@@ -19,6 +19,7 @@ class Pokemon {
         return json_encode($this);
     }
 
+    //Takes the attack from a pokemon and calculates a damage based on a resistance or weakness 
     public function attack ($target) {
         $str = $this->moves();
         $int = (int)$str;
@@ -27,8 +28,9 @@ class Pokemon {
         return $damage;
     }
 
+    //Checks the type and compares it with the resistance or weakness from an opponent  
     public function checkTyping ($int, $weakness, $resistance) {
-        $type = $this->type;
+        $type = $this->getter('type');
         $newDamage = 0;
 
         if ($type == $weakness) {
@@ -46,6 +48,7 @@ class Pokemon {
         return $newDamage;
     }
 
+    //Takes the attack from a pokemon and adds damage to it
     public function moves () {
         $moveArray = array("Tackle"=>"10", "Vine Whip"=>"20", "Water Gun"=>"30",
         "Thunderstorm"=>"40", "Ember"=>"50");
@@ -80,6 +83,9 @@ class Pokemon {
                 break;
             case 'attack':
                 return $this->attack;
+                break;
+            case 'type':
+                return $this->type;
                 break;
             default:
                 break;

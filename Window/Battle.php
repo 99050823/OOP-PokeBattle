@@ -53,6 +53,7 @@ echo "<h2></h2>";
 
         stage1();
         
+        //Function that handles the first contenders attack 
         function stage1 () {
             <?php
                 $damage = $contenders[0]->getDamage($contenders[1]);
@@ -75,6 +76,7 @@ echo "<h2></h2>";
             }, 2000);
         }
 
+        //Function that handles the second contenders attack
         function stage2 () {
             <?php
                 $damage = $contenders[1]->getDamage($contenders[0]);
@@ -97,6 +99,7 @@ echo "<h2></h2>";
             }, 2000);
         }
 
+        //Function that check the hp from each contender
         function checkHp(pokemon) {
             <?php 
                 $hp1 = $_SESSION['hpPokemon1']; 
@@ -143,6 +146,7 @@ echo "<h2></h2>";
             anchor.style.display = 'inline';
         }
 
+        //Sends the user back to the main page
         function end () {
             window.location.replace("http://localhost/OOP/Poke%20Battle%20-%20Project/OOP-PokeBattle/PHP/DestroySession.php");
         }
