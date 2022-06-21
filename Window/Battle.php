@@ -24,9 +24,9 @@ if (!isset($_SESSION['hpPokemon1'])) {
     $_SESSION['hpPokemon2'] = 100;   
 } 
 
-echo "<span class='pokemon-active'><p>".$contenders[0]->getter('name')."</p></span>";
+echo "<span class='pokemon-active'><p>".$contenders[0]->getName()."</p></span>";
 echo "<span><p>VS</p></span>";
-echo "<span class='pokemon-active'><p>".$contenders[1]->getter('name')."</p></span>";
+echo "<span class='pokemon-active'><p>".$contenders[1]->getName()."</p></span>";
 
 echo "<h2></h2>";
 
@@ -63,11 +63,11 @@ echo "<h2></h2>";
                 $_SESSION['hpPokemon2'] = $newHp;
             ?>
 
-            txt = "<?php echo $contenders[0]->getter('name') . ' uses ' . $contenders[0]->getter('attack')?>";
+            txt = "<?php echo $contenders[0]->getName() . ' uses ' . $contenders[0]->getAttack()?>";
             textEl.innerHTML = txt;
 
             setTimeout(() => {
-                txt = "<?php echo $contenders[1]->getter('name') . ' has ' . $_SESSION['hpPokemon2'] . ' HP left'?>";
+                txt = "<?php echo $contenders[1]->getName() . ' has ' . $_SESSION['hpPokemon2'] . ' HP left'?>";
                 textEl.innerHTML = txt;                
             }, 2000);
 
@@ -86,11 +86,11 @@ echo "<h2></h2>";
                 $_SESSION['hpPokemon1'] = $newHp;
             ?>
 
-            txt = "<?php echo $contenders[1]->getter('name') . ' uses ' . $contenders[1]->getter('attack')?>";
+            txt = "<?php echo $contenders[1]->getName() . ' uses ' . $contenders[1]->getAttack()?>";
             textEl.innerHTML = txt;
 
             setTimeout(() => {
-                txt = "<?php echo $contenders[0]->getter('name') . ' has ' . $_SESSION['hpPokemon1'] . ' HP left'?>";
+                txt = "<?php echo $contenders[0]->getName() . ' has ' . $_SESSION['hpPokemon1'] . ' HP left'?>";
                 textEl.innerHTML = txt;                
             }, 2000);
 
@@ -111,7 +111,7 @@ echo "<h2></h2>";
 
             if (pokemon == "Pokemon2") {
                 if (hp2 <= 0) {
-                    txt = "<?php echo $contenders[1]->getter('name') . " Fainted"?>"  
+                    txt = "<?php echo $contenders[1]->getName() . " Fainted"?>"  
                     pokemonBadge2.style.backgroundColor = 'red';
 
                     setTimeout(() => {
@@ -124,7 +124,7 @@ echo "<h2></h2>";
                 }
             } else if (pokemon == "Pokemon1"){
                 if (hp1 <= 0) {
-                    txt = "<?php echo $contenders[0]->getter('name') . " Fainted"?>"
+                    txt = "<?php echo $contenders[0]->getName() . " Fainted"?>"
                     pokemonBadge1.style.backgroundColor = 'red';
 
                     setTimeout(() => {

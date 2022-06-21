@@ -1,5 +1,7 @@
 <?php
 
+// The pokemon class contains all data it needs to use in the battle scene
+// It handles the pokemon's weakness and resistance an also checks damage an hp
 class Pokemon {
     private $name;
     private $type;
@@ -30,7 +32,7 @@ class Pokemon {
 
     //Checks the type and compares it with the resistance or weakness from an opponent  
     public function checkTyping ($int, $weakness, $resistance) {
-        $type = $this->getter('type');
+        $type = $this->getType();
         $newDamage = 0;
 
         if ($type == $weakness) {
@@ -53,7 +55,7 @@ class Pokemon {
         $moveArray = array("Tackle"=>"10", "Vine Whip"=>"20", "Water Gun"=>"30",
         "Thunderstorm"=>"40", "Ember"=>"50");
 
-        $move = $this->getter('attack');
+        $move = $this->getAttack();
 
         foreach($moveArray as $x => $x_value) {
             if ($x == $move) {
@@ -62,34 +64,25 @@ class Pokemon {
         }
     }
 
+    public function setName ($value) {
+        $this->name = $value;
+    }
+
     public function getDamage ($target) {
         $damage = $this->attack($target);
         return $damage;
     }
 
-    public function setter ($typeOfGetter, $value) {
-        switch ($typeOfGetter) {
-            case 'name':
-                $this->name = $value;
-            default:
-                break;
-        }
+    public function getName() {
+       return $this->name;
     }
 
-    public function getter ($typeOfGetter) {
-        switch ($typeOfGetter) {
-            case 'name':
-                return $this->name;
-                break;
-            case 'attack':
-                return $this->attack;
-                break;
-            case 'type':
-                return $this->type;
-                break;
-            default:
-                break;
-        }
+    public function getAttack() {
+        return $this->attack;
+    }
+
+    public function getType() {
+        return $this->type;
     }
 }
 
